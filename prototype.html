@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Allyviora AI</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#eef9f4;color:#102b49;font-family:Arial,sans-serif}
+header{background:white;padding:24px;text-align:center}
+.logo{font-size:36px;font-weight:bold;color:#102b49}
+.logo span{color:#008c80}
+small{color:#41645b}
+main{max-width:1000px;margin:auto;padding:18px}
+.hero{background:#98e4c5;border-radius:20px;padding:24px;margin-bottom:20px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:white;border:1px solid #cce7dc;border-radius:16px;padding:18px;margin-bottom:12px}
+.tile{background:white;color:#102b49;text-align:left;border:1px solid #cce7dc;padding:18px;border-radius:16px}
+.tile strong{display:block;font-size:18px;margin:10px 0}
+.tile span{font-size:30px}
+button{background:#247a60;color:white;border:0;padding:12px;border-radius:9px;font-size:15px;cursor:pointer}
+input,textarea,select{width:100%;padding:12px;margin:8px 0 15px;border:1px solid #a8c9bb;border-radius:8px;font:inherit}
+textarea{min-height:100px}
+h1,h2,h3{margin-top:0}
+p{line-height:1.5}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.result{background:#e8f8f1;padding:15px;border-radius:10px;margin-top:15px;white-space:pre-wrap}
+footer{text-align:center;padding:24px;color:#41645b;font-size:12px}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">Allyviora <span>AI</span></div>
+<p>Beyond the hire. Beside you always.</p>
+<small>Your personalized career companion</small>
+</header>
+<main>
+<nav>
+<button onclick="home()">Dashboard</button>
+<button onclick="coach()">AI Companion</button>
+</nav>
+<div id="screen">
+<div class="hero">
+<h1>Welcome to Allyviora AI</h1>
+<p>Your career journey starts here. Discover opportunities, build confidence and grow professionally.</p>
+<button onclick="coach()">Meet your AI companion</button>
+</div>
+<div class="grid" id="tiles"></div>
+</div>
+</main>
+<footer>Allyviora AI | Interactive Demo | Fictional data</footer>
+<script>
+var pillars=[
+["Discover","&#128269;","Find opportunities safely",["Job Discovery","Trust Shield"]],
+["Prepare","&#127891;","Build skills and confidence",["Resume Studio","Skill GPS"]],
+["Apply","&#128203;","Manage your applications",["Job Tracker","Ghost Watch","Inbox Sync"]],
+["Succeed","&#127919;","Prepare for your next interview",["Interview Coach","Interview Debrief","Next-Round Drill","Offer Advisor"]],
+["Support","&#129309;","Get help in your workplace",["Work Assistant","Job Buddy"]],
+["Thrive","&#128200;","Grow your career",["Career Growth","Onboarding"]]
+];
+var screen=document.getElementById("screen");
+function home(){
+screen.innerHTML='<div class="hero"><h1>Your career dashboard</h1><p>One companion for every stage of your career.</p><button onclick="coach()">Ask Allyviora AI</button></div><div class="grid" id="tiles"></div>';
+draw();
+}
+function draw(){
+var t=document.getElementById("tiles");
+pillars.forEach(function(p,i){
+var b=document.createElement("button");
+b.className="tile";
+b.innerHTML="<span>"+p[1]+"</span><strong>"+p[0]+"</strong>"+p[2];
+b.onclick=function(){openPillar(i)};
+t.appendChild(b);
+});
+}
+function openPillar(i){
+var p=pillars[i];
+screen.innerHTML='<div class="hero"><h2>'+p[0]+'</h2><p>'+p[2]+'</p></div>';
+p[3].forEach(function(name){
+var d=document.createElement("div");
+d.className="card";
+var h=document.createElement("h3");
+h.textContent=name;
+var b=document.createElement("button");
+b.textContent="Explore";
+b.onclick=function(){feature(name)};
+d.appendChild(h);d.appendChild(b);
+screen.appendChild(d);
+});
+}
+var tips={
+"Trust Shield":"Check the official company website, recruiter email domain and job posting. Never pay recruitment fees. Verification is not guaranteed.",
+"Resume Studio":"Tailor your summary to the target role. Highlight relevant skills and measurable achievements without inventing experience.",
+"Skill GPS":"Start with Python, APIs and JSON. Practice one small project and document your results.",
+"Ghost Watch":"Review the last recruiter contact date. Consider sending a polite follow-up after an appropriate interval.",
+"Inbox Sync":"Email connection is not enabled in this demo. You can enter recruiter messages manually.",
+"Interview Coach":"Practice this question: Tell me about a challenge you faced and how you resolved it. Use the STAR method.",
+"Interview Debrief":"Reflect on your answers, identify improvement areas and prepare stronger examples.",
+"Next-Round Drill":"Practice technical questions, behavioral scenarios and questions for your interviewer.",
+"Offer Advisor":"Compare salary, benefits, work location, career growth and employment terms.",
+"Work Assistant":"Break the task into smaller steps. Review documentation and test your solution. Do not enter confidential employer data.",
+"Job Buddy":"Identify your priorities, ask clarifying questions and schedule regular progress reviews.",
+"Career Growth":"Set a 90-day learning goal and track weekly progress.",
+"Onboarding":"Learn team expectations, tools, policies and key responsibilities during your first 30 days."
+};
+function feature(name){
+if(name==="Job Discovery"){jobs();return}
+if(name==="Job Tracker"){tracker();return}
+screen.innerHTML='<div class="card"><h2>'+name+'</h2><p>Personalized career assistance</p><label for="query">Describe your goal or question</label><textarea id="query" placeholder="Enter fictional sample information"></textarea><button id="generate">Get guidance</button><div id="output" class="result">Your guidance will appear here.</div></div>';
+document.getElementById("generate").onclick=function(){
+document.getElementById("output").textContent="Simulated AI guidance:\n\n"+(tips[name]||"Define your goal and identify your next action.");
+};
+}
+function jobs(){
+screen.innerHTML='<div class="hero"><h2>Job Discovery</h2><p>Fictional opportunities for demonstration</p></div><div class="card"><h3>Junior AI Developer</h3><p>Toronto | Hybrid | Sample company</p><button onclick="feature(\'Trust Shield\')">Assess job trust</button></div><div class="card"><h3>Salesforce Administrator</h3><p>Toronto | Remote | Sample company</p><button onclick="tracker()">Track application</button></div>';
+}
+var applications=[];
+function tracker(){
+screen.innerHTML='<div class="card"><h2>Application Tracker</h2><label for="role">Job title</label><input id="role" placeholder="Junior AI Developer"><label for="status">Application status</label><select id="status"><option>Applied</option><option>Interview</option><option>Offer</option><option>Closed</option></select><button onclick="addJob()">Add application</button><div id="records"></div></div>';
+showJobs();
+}
+function addJob(){
+var role=document.getElementById("role").value.trim();
+if(!role)return;
+applications.push([role,document.getElementById("status").value]);
+document.getElementById("role").value="";
+showJobs();
+}
+function showJobs(){
+var r=document.getElementById("records");
+r.innerHTML="";
+applications.forEach(function(a){
+var p=document.createElement("p");
+p.className="result";
+p.textContent=a[0]+" - "+a[1];
+r.appendChild(p);
+});
+}
+function coach(){
+screen.innerHTML='<div class="hero"><h2>Meet your AI companion</h2><p>I am here to support you before, during and after employment.</p></div><div class="card"><label for="message">How can I help you today?</label><textarea id="message" placeholder="I need help preparing for an interview"></textarea><button onclick="reply()">Ask Allyviora</button><div id="answer" class="result">Ready to help!</div></div>';
+}
+function reply(){
+var q=document.getElementById("message").value.toLowerCase();
+var a="Let us identify your career goal and create a practical action plan.";
+if(q.indexOf("interview")>=0)a=tips["Interview Coach"];
+else if(q.indexOf("resume")>=0)a=tips["Resume Studio"];
+else if(q.indexOf("skill")>=0)a=tips["Skill GPS"];
+else if(q.indexOf("job")>=0)a=tips["Trust Shield"];
+document.getElementById("answer").textContent="Demo AI response:\n\n"+a;
+}
+draw();
+</script>
+</body>
+</html>
